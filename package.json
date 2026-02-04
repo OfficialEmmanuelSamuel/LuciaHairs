@@ -1,0 +1,15 @@
+{
+    "name": "lucia-hairs",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
+    },
+    "dependencies": {
+        "concurrently": "^9.2.1",
+        "framer-motion": "^12.25.0"
+    },
+    "devDependencies": {
+        "baseline-browser-mapping": "^2.9.11"
+    }
+}
