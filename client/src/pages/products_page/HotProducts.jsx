@@ -18,7 +18,7 @@ const HotProducts = () => {
         {hotProducts.map((p) => (
           <div key={p._id} className="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
             <img
-              src={`http://localhost:5000/${p.image}`}
+              src={`https://luciahair-backend.onrender.com/${p.image}`}
               alt={p.name}
               className="w-full h-56 object-cover rounded"
             />

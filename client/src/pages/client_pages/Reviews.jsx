@@ -13,7 +13,7 @@ const CustomersReview = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/reviews")
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/reviews`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reviews");
         return res.json();

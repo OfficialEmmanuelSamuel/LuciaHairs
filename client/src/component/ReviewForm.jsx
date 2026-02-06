@@ -14,7 +14,7 @@ const ReviewForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await fetch("http://localhost:5000/api/reviews", {
+    await fetch(`${import.meta.env.VITE_API_BASE_URL}/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
