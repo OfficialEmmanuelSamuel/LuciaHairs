@@ -17,7 +17,7 @@ import { getToken } from "./utils/auth";
 import Shopping from "./pages/products_page/Shopping";
 import Footer from "./component/Footer";
 import AddProduct from "./pages/admin_pages/AddProduct";
-import AdminOfferDashboard from "./pages/admin_pages/adminOfferDashboard";
+import AdminDashboardOffer from "./pages/admin_pages/AdminOfferDashboard";  
 import ScrollToTop from "./component/ScrollToTop";
 import AdminPreorderForm from "./pages/admin_pages/AdminPreorderForm";
 import AdminOfferForm from "./pages/admin_pages/AdminOfferForm";
@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Shopping" element={<Shopping />} />
         <Route path="/SalesOffer" element={<SalesOffer />}/>
-        <Route path="/admin/offer-stats" element={<AdminOfferDashboard />} />
+        <Route path="/admin/offer-stats" element={<AdminDashboardOffer />} />
         <Route path="/PreOrder" element={<PreOrder />}/>
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/products" element={<AddProduct />} />
