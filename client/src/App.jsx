@@ -17,7 +17,7 @@ import { getToken } from "./utils/auth";
 import Shopping from "./pages/products_page/Shopping";
 import Footer from "./component/Footer";
 import AddProduct from "./pages/admin_pages/AddProduct";
-import AdminDashboardOffer from "./pages/admin_pages/AdminOfferDashboard";  
+import AdminDashboardOffer from "../../client/src/pages/admin_pages/AdminDashboardOffer";  
 import ScrollToTop from "./component/ScrollToTop";
 import AdminPreorderForm from "./pages/admin_pages/AdminPreorderForm";
 import AdminOfferForm from "./pages/admin_pages/AdminOfferForm";
