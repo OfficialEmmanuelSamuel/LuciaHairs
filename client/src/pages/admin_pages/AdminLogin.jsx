@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import api from "../utils/api.js";
+import api from "../../utils/api.js";
 import { motion } from "framer-motion";
-import { saveToken } from "../utils/auth.js";
+import { saveToken } from "../../utils/auth.js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
-import logo from "../assets/images/logo_no_bg.png";
+import logo from "../../assets/images/logo_no_bg.png";
 import { FaUser } from "react-icons/fa";
 
 const AdminLogin = ({ onLoginSuccess }) => {

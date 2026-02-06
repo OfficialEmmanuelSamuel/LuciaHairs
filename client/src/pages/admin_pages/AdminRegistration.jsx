@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import api from "../utils/api.js";
+import api from "../../utils/api.js";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import logo from "../assets/images/logo_no_bg.png";
+import logo from "../../assets/images/logo_no_bg.png";
 import { FaUser } from "react-icons/fa";
 
 const AdminRegister = () => {
@@ -111,7 +111,7 @@ const AdminRegister = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-50 mt-3 bg-gradient-to-r from-pink-700 to-pink-800 text-white py-2 rounded-sm cursor-pointer hover:bg-gradient-to-r from-pink-700 to-pink-800 transition font-nunito disabled:opacity-50"
+            className="w-50 mt-3 bg-gradient-to-r from-pink-700 to-pink-800 text-white py-2 rounded-sm cursor-pointer hover:bg-gradient-to-r hover:from-pink-500 hover:to-pink-600 transition font-nunito disabled:opacity-50"
           >
             {loading ? "Registering..." : "Register Admin"}
           </button>

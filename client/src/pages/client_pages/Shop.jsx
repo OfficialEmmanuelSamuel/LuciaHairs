@@ -1,8 +1,8 @@
 import React from "react";
-import Wigs from "../assets/images/IMG_1082.png";
-import Frontals from "../assets/images/IMG_1088.png";
-import Bundles from "../assets/images/IMG_1086.png";
-import Clipsin from "../assets/images/IMG_1085.png";
+import Wigs from "../../assets/images/IMG_1082.PNG";
+import Frontals from "../../assets/images/IMG_1088.PNG";
+import Bundles from "../../assets/images/IMG_1086.PNG";
+import Clipsin from "../../assets/images/IMG_1085.PNG";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -24,11 +24,11 @@ const cardVariants = {
 
 const Shop = () => {
   return (
-    <section className="flex flex-col items-center bg-linear-to-b from-rose-100 to-gray-100 p-5 gap-12 w-full">
+    <section className="min-h-screen flex flex-col items-center bg-linear-to-b from-rose-100 to-gray-100 p-5 gap-12 w-full">
       
       {/* Header */}
       <motion.div
-        className="max-w-3xl text-center mb-10 mt-15"
+        className="max-w-3xl text-center mb-10 mt-20"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -94,7 +94,7 @@ const Shop = () => {
               >
                 <Link
                   to={product.link}
-                  className="text-sm font-bold font-quicksand underline underline-offset-2 text-white hover:text-rose-500 transition-colors duration-300"
+                  className="text-sm rounded-lg font-bold font-quicksand underline underline-offset-2 text-white hover:text-rose-500 transition-colors duration-300"
                 >
                   SHOP NOW
                 </Link>

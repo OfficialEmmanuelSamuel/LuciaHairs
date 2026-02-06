@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import MyReviewForm from "../component/ReviewForm";
+import MyReviewForm from "../../component/ReviewForm";
 import { FaUser } from "react-icons/fa";
 
 const CustomersReview = () => {
@@ -23,7 +23,7 @@ const CustomersReview = () => {
   }, []);
 
   return (
-    <div className="py-10 bg-gray-50">
+    <div className="py-10 bg-gray-50 min-h-screen mt-15">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold font-lato text-center mb-6 dark:text-white">
           Trusted by Our Clients

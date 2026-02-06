@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../utils/api.js";
+import api from "../../utils/api.js";
 
 const HotProducts = () => {
   const [hotProducts, setHotProducts] = useState([]);

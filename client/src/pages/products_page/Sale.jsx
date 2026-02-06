@@ -1,10 +1,8 @@
 import React from "react";
-import Offer from "../component/OfferLink";
-import FeaturedProduct from '../data/Featured/FeaturedProduct';
-import Hotpick from '../data/HotPick/HotPick';
+import FeaturedProduct from '../../data/Featured/FeaturedProduct';
+import Hotpick from '../../data/HotPick/HotPick';
 import { GiStarFormation } from 'react-icons/gi';
 import { FaFire } from "react-icons/fa6";
-import OfferImage from '../assets/images/IMG_1363.jpg';
 import { TbCurrencyNaira } from 'react-icons/tb';
 
 const Sale = () => {

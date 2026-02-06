@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import api from "../utils/api.js";
-import Navbar from "../component/Navbar.jsx";
-import Footer from "../component/Footer.jsx";
+import api from "../../utils/api.js";
+import Navbar from "../../component/Navbar.jsx";
+import Footer from "../../component/Footer.jsx";
 import { Pencil, Trash2, Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";import { getToken, logout } from "../utils/auth.js";
+import { useNavigate } from "react-router-dom";
+import { getToken, logout } from "../../utils/auth.js";
 import toast from "react-hot-toast";
+import { IoBarChart } from "react-icons/io5";
 
+const BarChart = IoBarChart;
 
 const AdminDashboard = ({ onLogout }) => {
   const [products, setProducts] = useState([]);
@@ -17,19 +20,19 @@ const AdminDashboard = ({ onLogout }) => {
     category: "",
   });
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-  
-  const cleanBase = baseURL.replace("/api", "");
-  
+  const baseURL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
-  const navigate = useNavigate(); 
+  const cleanBase = baseURL.replace("/api", "");
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-      logout();
-      onLogout();
-      navigate("/admin/login"); // ✅ go straight to login page
+    logout();
+    onLogout();
+    navigate("/admin/login"); // ✅ go straight to login page
   };
-  
+
   const token = getToken();
 
   // Fetch products
@@ -47,7 +50,8 @@ const AdminDashboard = ({ onLogout }) => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
     try {
       await api.delete(`/products/${id}`);
       setProducts(products.filter((p) => p._id !== id));
@@ -66,8 +70,6 @@ const AdminDashboard = ({ onLogout }) => {
     });
   };
 
-  
-
   const handleUpdate = async (id) => {
     try {
       await api.put(`/products/${id}`, formData);
@@ -79,7 +81,6 @@ const AdminDashboard = ({ onLogout }) => {
       toast.error(err.response?.data?.message || "Failed to update product.");
     }
   };
-
 
   const handleCancel = () => {
     setEditingProduct(null);
@@ -95,6 +96,18 @@ const AdminDashboard = ({ onLogout }) => {
     navigate("/admin/products");
   };
 
+  const handleOfferStats = () => {
+    navigate("/admin/offer-stats");
+  }
+
+  const handlePreorderProduct = () => {
+    navigate("/admin/preorders");
+  };
+
+  const handleSalesOfferProduct = () => {
+    navigate("/admin/offer-products");
+  };
+
   return (
     <div>
       <Navbar />
@@ -106,11 +119,36 @@ const AdminDashboard = ({ onLogout }) => {
           </h2>
 
           <div className="flex flex-wrap justify-center sm:justify-end gap-3">
+            <div>
+              <span className="text-sm text-gray-500">Add Product</span>
+            </div>
+            
             <button
               onClick={handleAddProduct}
               className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
             >
-              <Plus size={18} /> Add Product
+              <Plus size={18} /> All Products
+            </button>
+
+            <button
+              onClick={handlePreorderProduct}
+              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
+            >
+              <Plus size={18} /> Pre-Order Products
+            </button>
+
+            <button
+              onClick={handleSalesOfferProduct}
+              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
+            >
+              <Plus size={18} /> Offer Sales Products
+            </button>
+
+            <button
+              onClick={handleOfferStats}
+              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
+            >
+              <BarChart size={18} /> Offer Stats
             </button>
 
             <button
@@ -121,8 +159,6 @@ const AdminDashboard = ({ onLogout }) => {
             </button>
           </div>
         </div>
-
-
 
         {/* Product Table */}
         <div className="overflow-x-auto">
@@ -146,7 +182,9 @@ const AdminDashboard = ({ onLogout }) => {
                       className="w-16 h-16 object-cover rounded-lg"
                     />
                   </td>
-                  <td className="py-2 px-4 font-semibold font-nunito">{p.name}</td>
+                  <td className="py-2 px-4 font-semibold font-nunito">
+                    {p.name}
+                  </td>
                   <td className="py-2 px-4 font-nunito">{p.category}</td>
                   <td className="py-2 px-4 font-nunito">₦{p.price}</td>
                   <td className="py-2 px-4 font-nunito">
@@ -210,7 +248,8 @@ const AdminDashboard = ({ onLogout }) => {
                           onClick={() => handleDelete(p._id)}
                           className="flex items-center text-white gap-2 bg-red-600 py-1 px-5 rounded-sm"
                         >
-                          <Trash2 size={18} />Delete
+                          <Trash2 size={18} />
+                          Delete
                         </button>
                       </div>
                     )}

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HeroImage from "../assets/images/IMG_1081.png";
+import HeroImage from "../../assets/images/IMG_1081.PNG";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { FiRefreshCcw } from "react-icons/fi";
 import { FaRegSmile } from "react-icons/fa";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { motion } from "framer-motion";
 import { RxDoubleArrowDown } from "react-icons/rx";
+import { PiHandbagFill } from "react-icons/pi";
 
 const HeroFeatures = () => {
   // Variants for feature cards with stagger
@@ -17,9 +18,10 @@ const HeroFeatures = () => {
       y: 0,
       transition: {
         delay: i * 0.2,
-        duration: 0.6,
+        duration: 0.3,
         type: "spring",
-        stiffness: 50,
+        stiffness: 100,
+        damping: 20,
       },
     }),
   };
@@ -36,8 +38,8 @@ const HeroFeatures = () => {
         <div className="flex-1 flex flex-col items-start text-white">
           <motion.p
             className="text-lg font-bold mb-3 bg-linear-to-r from-gray-900 to-rose-500 bg-clip-text text-transparent font-quicksand"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
@@ -47,33 +49,21 @@ const HeroFeatures = () => {
 
           <motion.h1
             className="text-3xl lg:text-5xl font-extrabold mb-6 leading-relaxed font-nimbus bg-gradient-to-r from-gray-700 to-pink-600 bg-clip-text text-transparent"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Discover wigs that redefine beauty effortless, elegant, and uniquely
             you.
           </motion.h1>
-
-          <Link to="/shopping">
-            <motion.button
-              className="bg-white text-pink-700 font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 font-quicksand transition transform"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Shop Now
-            </motion.button>
-          </Link>
         </div>
 
         {/* Hero Image */}
         <motion.div
           className="flex-1 flex justify-center"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
@@ -137,32 +127,43 @@ const HeroFeatures = () => {
 
       {/* About Section */}
       <motion.div
-        className="text-center text-white mt-16 max-w-3xl"
+        className="text-center text-white mt-16 mb-30 max-w-3xl"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
       >
         <p className="text-lg uppercase mb-2 font-bold underline decoration-rose-500 underline-offset-4 text-gray-900 font-quicksand">
           About Our Wigs
         </p>
-        <p className="text-xl font-quicksand font-medium mt-5 mb-10 text-gray-900">
+        <p className="text-lg font-quicksand font-medium mt-5 mb-10 text-gray-900">
           Discover our exclusive wig collection, designed to give you the
           perfect blend of style, quality, and comfort. Shop with us and enjoy
           premium wigs that make you look and feel your best.
         </p>
+        {/* Scroll Down Indicator */}
+        <motion.div
+          className="absolute bottom-40 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, delay: 0.5 }}
+        >
+          <span className="bg-red-300 animate-bounce text-pink-700">
+            <RxDoubleArrowDown size={30} />
+          </span>
+        </motion.div>
       </motion.div>
 
-      {/* Scroll Down Indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}
-      >
-        <span className="bg-red-300 animate-bounce text-pink-700">
-          <RxDoubleArrowDown size={30} />
-        </span>
-      </motion.div>
+      <Link to="/shopping">
+        <motion.button
+          className="absolute flex items-center gap-5 bottom-10 left-1/2 -translate-x-1/2 bg-white text-pink-700 font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 font-quicksand transition transform"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+        >
+          <PiHandbagFill size={25} /> SHOP NOW
+        </motion.button>
+      </Link>
     </section>
   );
 };

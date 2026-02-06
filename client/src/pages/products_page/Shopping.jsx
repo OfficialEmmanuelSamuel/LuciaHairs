@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import api from "../utils/api.js";
-import Navbar from "../component/Navbar.jsx";
-import Footer from "../component/Footer.jsx";
+import api from "../../utils/api.js";
+import Navbar from "../../component/Navbar.jsx";
+import Footer from "../../component/Footer.jsx";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ================= Purchase Page Component =================
@@ -92,45 +92,39 @@ export default function Shopping() {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen">
-      <Navbar />
+    <div className="min-h-screen max-w-7xl mx-auto px-4 py-12">
+      <h2 className="text-3xl py-14 font-bold text-center text-slate-800 mb-10">
+        Available Products
+      </h2>
 
-      <div className="min-h-screen max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl py-14 font-bold text-center text-slate-800 mb-10">
-          Available Products
-        </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        {products.map((p) => (
+          <motion.div
+            key={p._id}
+            whileHover={{ y: -6 }}
+            className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden"
+          >
+            <img
+              src={getImageUrl(p.image)}
+              alt={p.name}
+              className="h-56 w-full object-cover"
+            />
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {products.map((p) => (
-            <motion.div
-              key={p._id}
-              whileHover={{ y: -6 }}
-              className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden"
-            >
-              <img
-                src={getImageUrl(p.image)}
-                alt={p.name}
-                className="h-56 w-full object-cover"
-              />
+            <div className="p-4 flex flex-col h-full">
+              <h3 className="font-semibold text-sm mb-1">{p.name}</h3>
+              <p className="text-xs text-gray-500 mb-2">{p.category}</p>
+              <p className="font-bold text-pink-600 mb-4">₦{p.price}</p>
 
-              <div className="p-4 flex flex-col h-full">
-                <h3 className="font-semibold text-sm mb-1">{p.name}</h3>
-                <p className="text-xs text-gray-500 mb-2">{p.category}</p>
-                <p className="font-bold text-pink-600 mb-4">₦{p.price}</p>
-
-                <button
-                  onClick={() => openPurchasePage(p)}
-                  className="rounded-xl bg-gradient-to-r from-pink-700 to-pink-600 text-white py-2 text-sm font-semibold hover:brightness-110 transition"
-                >
-                  Purchase
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              <button
+                onClick={() => openPurchasePage(p)}
+                className="rounded-xl bg-gradient-to-r from-pink-700 to-pink-600 text-white py-2 text-sm font-semibold hover:brightness-110 transition"
+              >
+                Purchase
+              </button>
+            </div>
+          </motion.div>
+        ))}
       </div>
-
-      <Footer />
     </div>
   );
 }
