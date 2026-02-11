@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Link } from "react-router-dom";
-import HeroImage from "../../assets/images/IMG_1081.PNG";
+import HeroImage from "../../assets/images/luciana.PNG";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { FiRefreshCcw } from "react-icons/fi";
 import { FaRegSmile } from "react-icons/fa";
@@ -30,10 +31,12 @@ const HeroFeatures = () => {
     <section className="relative w-full py-20 min-h-screen bg-gradient-to-b from-gray-300 to-rose-100 overflow-hidden flex flex-col justify-center items-center px-5 lg:px-20">
       {/* Floating background shapes */}
       <div className="hidden md:flex absolute top-10 left-0 w-50 h-50 bg-rose-500 rounded-full opacity-30 animate-pulse"></div>
+      <div className="hidden md:flex absolute top-75 right-30 w-20 h-20 bg-rose-700 rounded-4xl opacity-30 animate-spin "></div>
+      <div className="hidden md:flex absolute top-25 right-10 w-10 h-10 bg-rose-950 rounded-full opacity-30 animate-bounce"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-rose-500 rounded-full opacity-20 animate-ping"></div>
 
       {/* Hero Main Section */}
-      <div className="relative z-10 flex flex-col-reverse lg:flex-row items-center w-full max-w-7xl gap-10">
+      <div className="relative z-10 flex flex-col-reverse mt-15 lg:flex-row items-center w-full max-w-7xl gap-10">
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-start text-white">
           <motion.p

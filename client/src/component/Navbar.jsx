@@ -1,16 +1,10 @@
 import { React, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BrandLogo from "../assets/images/logo_no_bg.png";
 
-const Navbar = ({ scrollToSection }) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleNavClick = (id) => {
-    navigate("/", { state: { id } });
-    setMenuOpen(false);
-  };
+  
   return (
     <nav className="fixed top-0 left-0 w-full bg-transparent filter backdrop-blur-lg h-15 z-50">
       <div className="mx-auto px-2 py-2 flex justify-between items-center">
@@ -51,19 +45,17 @@ const Navbar = ({ scrollToSection }) => {
         <div className="md:hidden mx-2">
           <div
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`flex flex-col justify-center items-center w-10 h-10 space-y-1 ${menuOpen ? "shadow-sm  rounded-full" : ""}`}
+            className={`flex flex-col justify-center items-center w-10 h-10 space-y-1 ${menuOpen ? "shadow-none" : ""}`}
           >
             <span
-              className={`block h-0.5 w-6 rounded-lg bg-pink-600 transform transition duration-300 ease-in-out ${menuOpen ? "rotate-45 translate-y-2.5" : ""}`}
+              className={`block h-1 w-7 rounded-lg bg-gray-600 transform transition duration-300 ease-in-out ${menuOpen ? "rotate-45 translate-y-2.5" : ""}`}
+            />
+
+            <span
+              className={`block h-1 w-7 rounded-lg bg-gray-600  transform transition duration-300 ease-in-out ${menuOpen ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-0.5 w-6 rounded-lg bg-pink-600  transform transition duration-300 ease-in-out ${menuOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-6 rounded-lg bg-pink-600  transform transition duration-300 ease-in-out ${menuOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-6 rounded-lg bg-pink-600  transform transition duration-300 ease-in-out ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              className={`block h-1 w-7 rounded-lg bg-gray-600  transform transition duration-300 ease-in-out ${menuOpen ? "-rotate-45 -translate-y-1.5" : ""}`}
             />
           </div>
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import Wigs from "../../assets/images/IMG_1082.PNG";
 import Frontals from "../../assets/images/IMG_1088.PNG";

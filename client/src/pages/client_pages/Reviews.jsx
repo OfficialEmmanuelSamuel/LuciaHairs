@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useEffect, useState } from "react";
 import "swiper/css";
@@ -7,7 +9,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import MyReviewForm from "../../component/ReviewForm";
-import { FaUser } from "react-icons/fa";
+import { FaQuoteLeft, FaUser } from "react-icons/fa";
+import {RxQuote } from "react-icons/rx";
 
 const CustomersReview = () => {
   const [reviews, setReviews] = useState([]);
@@ -25,16 +28,13 @@ const CustomersReview = () => {
   return (
     <div className="py-10 bg-gray-50 min-h-screen mt-15">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold font-lato text-center mb-6 dark:text-white">
-          Trusted by Our Clients
+        <h2 className="text-3xl font-bold font-playfair text-center mb-6 dark:text-white">
+          What Our Client Says
         </h2>
 
         {/* Trust Badge */}
         <div className="flex justify-center mb-10 items-center gap-1">
-          <IoMdCheckmarkCircleOutline size={35} className="text-rose-700" />
-          <p className="text-2xl font-medium font-quicksand dark:text-white">
-            Reviews
-          </p>
+          <RxQuote size={70} className="text-rose-700" />
         </div>
 
         <Swiper

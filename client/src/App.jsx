@@ -21,6 +21,7 @@ import AdminDashboardOffer from "../../client/src/pages/admin_pages/AdminDashboa
 import ScrollToTop from "./component/ScrollToTop";
 import AdminPreorderForm from "./pages/admin_pages/AdminPreorderForm";
 import AdminOfferForm from "./pages/admin_pages/AdminOfferForm";
+import LandingPage from "./pages/LandingPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
@@ -30,6 +31,7 @@ const App = () => {
       <Navbar />
       <ScrollToTop />
       <Routes>
+        <Route path="/LandingPage" element={<LandingPage />} />
         <Route path="/" element={<Hero />} />
         <Route path="/About" element={<About />} />
         <Route path="/Shop" element={<Shop />} />

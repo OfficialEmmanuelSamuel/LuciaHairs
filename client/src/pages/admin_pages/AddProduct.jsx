@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.js";
 import { getToken } from "../../utils/auth.js";
@@ -105,22 +106,22 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white p-2">
-      <div className="max-w-2xl mx-auto flex justify-between items-center mb-8">
+    <section className="min-h-screen bg-white py-30 px-5 bg-red-900 border-2">
+      <div className="w-full mx-auto flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-pink-700 font-nunito">
-          Add Product
+         ADD SHOPPING PRODUCT
         </h1>
         <button
           onClick={dashBoard}
           className="bg-pink-700 text-white px-4 py-2 rounded-lg font-nunito hover:bg-pink-600 transition"
         >
-          Dashboard
+          MENU
         </button>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl bg-white p-3 rounded-2xl shadow-lg space-y-6 mx-auto"
+        className="w-full grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-3 p-3 rounded-2xl space-y-6 mx-auto"
       >
         {/* PRODUCT DETAILS FIELDSET */}
         <fieldset className="border border-gray-300 rounded-xl p-6">
@@ -167,6 +168,7 @@ const AddProduct = () => {
               placeholder="Description"
               value={form.description}
               onChange={handleChange}
+              rows={6}
               className="border border-gray-300 font-nunito rounded p-2 md:col-span-2 focus:ring-1 focus:ring-pink-400"
             />
           </div>
@@ -231,12 +233,12 @@ const AddProduct = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-gradient-to-r from-pink-700 to-pink-800 text-white font-nunito font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition disabled:opacity-50"
+          className="w-60 h-10 bg-gradient-to-r from-pink-700 to-pink-800 text-white font-nunito font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition disabled:opacity-50 sm:mt-13 sm:ml-20 lg:ml-2 lg:mt-5"
         >
-          {loading ? "Uploading..." : "Add Product"}
+          {loading ? "Uploading Products..." : "Upload Product"}
         </button>
       </form>
-    </div>
+    </section>
   );
 };
 

@@ -1,73 +1,38 @@
-import { React, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import Home from "../sections/Hero";
-import Shop from "../sections/Shop";
-import SalesOffersSection from "../sections/SalesOffer";
-import PreOrderSection from "../sections/PreOrder";
-import CustomersReview from "../sections/Reviews";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import Navbar from "../component/Navbar";
-import Footer from "../component/Footer";
-import WhatsappButton from "../component/Whatsapp";
-import ContactSection from "../component/ContactSection"
+import { React, } from "react";
+import AddProduct from "./admin_pages/AddProduct";
+import AdminDashboardOffer from "./admin_pages/AdminDashboardOffer";
+import AdminOfferForm from "./admin_pages/AdminOfferForm";
+import AdminPreorderForm from "./admin_pages/AdminPreorderForm";
 
 const LandingPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
 
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      const yOffset = -50; //Nabvar height
-      const y =
-        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-      setMenuOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (location.state?.id) {
-      scrollToSection(location.state.id);
-    }
-  }, [location.state, scrollToSection]);
-
-  useEffect(() => {
-    AOS.init({ duration: 800 });
-  }, []);
 
   return (
     <div className="">
-      <Navbar scrollToSection={scrollToSection} setMenuOpen={setMenuOpen} />
 
-      <section id="hero">
-        <Home />
+      <section id="hero border-2">
+        <AddProduct />
       </section>
 
-      <section id="shop">
-        <Shop />
+      <section id="shop border-">
+        <AdminDashboardOffer />
       </section>
 
-      <section id="preorder">
-        <PreOrderSection />
+      <section id="preorder border-">
+        <AdminOfferForm />
       </section>
       
-      <section id="sale">
-        <SalesOffersSection />
+      <section id="sale border-m">
+        <AdminPreorderForm />
       </section>
 
-      <section id="contact">
-        <ContactSection />
+      <section id="contact border-">
+        
       </section>
 
-      <section id="reviews">
-        <CustomersReview />
+      <section id="reviews border-">
+        
       </section>
-
-      <WhatsappButton />
-
-      <Footer scrollToSection={scrollToSection} />
     </div>
   );
 };
