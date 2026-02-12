@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { Link } from "react-router-dom";
-import HeroImage from "../../assets/images/luciana.PNG";
+import HeroImage from "../../assets/images/lucia.PNG";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { FiRefreshCcw } from "react-icons/fi";
 import { FaRegSmile } from "react-icons/fa";
