@@ -111,7 +111,6 @@ export default function Shopping() {
 
   return (
     <div className="bg-gradient-to-br from-white via-pink-50 to-fuchsia-100 min-h-screen">
-      <Navbar />
 
       {/* HEADER */}
       <div className="flex justify-between items-center max-w-6xl mx-auto px-4 pt-24">
@@ -262,8 +261,6 @@ export default function Shopping() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <Footer />
     </div>
   );
 }

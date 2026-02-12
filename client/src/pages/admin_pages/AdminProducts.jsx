@@ -133,25 +133,25 @@ const AdminDashboard = () => {
                   className="w-full h-60 object-fit rounded-t-xl mb-4"
                 />
 
-                <h3 className="text-lg font-bold">{p.name}</h3>
-                <p className="text-gray-500 text-sm mb-2">
+                <h3 className="text-lg font-bold font-quicksand">{p.name}</h3>
+                <p className="text-gray-500 text-sm mb-2 font-quicksand">
                   {p.category}
                 </p>
-                <p className="text-pink-600 font-semibold mb-4">
+                <p className="text-pink-600 font-semibold mb-4 font-quicksand">
                   ₦{p.price}
                 </p>
 
                 <div className="flex justify-between">
                   <button
                     onClick={() => setSelectedProduct(p)}
-                    className="flex items-center gap-1 bg-slate-600 text-white px-3 py-1 rounded-lg text-sm"
+                    className="flex items-center gap-1 bg-slate-600 text-white px-3 py-1 rounded-lg text-sm font-quicksand"
                   >
                     <Pencil size={16} /> Edit
                   </button>
 
                   <button
                     onClick={() => setDeleteId(p._id)}
-                    className="flex items-center gap-1 bg-rose-800 text-white px-3 py-1 rounded-lg text-sm"
+                    className="flex items-center gap-1 bg-rose-800 text-white px-3 py-1 rounded-lg text-sm font-quicksand"
                   >
                     <Trash2 size={16} /> Delete
                   </button>
