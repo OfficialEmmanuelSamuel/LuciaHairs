@@ -1,266 +1,296 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import api from "../../utils/api.js";
-import Navbar from "../../component/Navbar.jsx";
-import Footer from "../../component/Footer.jsx";
-import { Pencil, Trash2, Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { getToken, logout } from "../../utils/auth.js";
+import { Pencil, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { IoBarChart } from "react-icons/io5";
 
-const BarChart = IoBarChart;
-
-const AdminDashboard = ({ onLogout }) => {
+const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
-  const [editingProduct, setEditingProduct] = useState(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    category: "",
-  });
+  const [loading, setLoading] = useState(true);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [deleteId, setDeleteId] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const productsPerPage = 6;
 
   const baseURL =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-
   const cleanBase = baseURL.replace("/api", "");
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    onLogout();
-    navigate("/admin/login"); // ✅ go straight to login page
-  };
-
-  const token = getToken();
-
-  // Fetch products
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const res = await api.get("/products");
       setProducts(res.data);
     } catch (err) {
       console.error("Error fetching products:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?"))
-      return;
     try {
       await api.delete(`/products/${id}`);
       setProducts(products.filter((p) => p._id !== id));
+      toast.success("Product deleted");
     } catch (err) {
-      console.error("Error deleting:", err);
+      toast.error("Delete failed");
     }
   };
 
-  const handleEdit = (product) => {
-    setEditingProduct(product._id);
-    setFormData({
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      category: product.category,
-    });
-  };
-
-  const handleUpdate = async (id) => {
+  const handleUpdate = async () => {
     try {
-      await api.put(`/products/${id}`, formData);
-      toast.success("Product updated successfully!");
+      await api.put(`/products/${selectedProduct._id}`, selectedProduct);
+      toast.success("Product updated");
       fetchProducts();
-      setEditingProduct(null);
+      setSelectedProduct(null);
     } catch (err) {
-      console.error("Error updating:", err.response?.data || err);
-      toast.error(err.response?.data?.message || "Failed to update product.");
+      toast.error("Update failed");
     }
   };
 
-  const handleCancel = () => {
-    setEditingProduct(null);
-    setFormData({ name: "", price: "", description: "", category: "" });
-  };
+  const categories = [
+    "All",
+    ...new Set(products.map((p) => p.category)),
+  ];
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const filteredProducts = products
+    .filter((p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((p) =>
+      selectedCategory === "All"
+        ? true
+        : p.category === selectedCategory
+    );
 
-  // ✅ navigate to AddProduct page
-  const handleAddProduct = () => {
-    navigate("/admin/products");
-  };
-
-  const handleOfferStats = () => {
-    navigate("/admin/offer-stats");
-  }
-
-  const handlePreorderProduct = () => {
-    navigate("/admin/preorders");
-  };
-
-  const handleSalesOfferProduct = () => {
-    navigate("/admin/offer-products");
-  };
+  const indexOfLast = currentPage * productsPerPage;
+  const indexOfFirst = indexOfLast - productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    indexOfFirst,
+    indexOfLast
+  );
+  const totalPages = Math.ceil(
+    filteredProducts.length / productsPerPage
+  );
 
   return (
-    <div>
-      <Navbar />
-      <div className="p-6 bg-gray-50 min-h-screen mt-16">
-        {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-700 font-nunito text-center sm:text-left">
-            Admin Dashboard — Manage Products
-          </h2>
+    <div className="min-h-screen w-full mb-10">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border rounded-xl px-4 py-2 w-72 focus:ring-2 focus:ring-pink-500 outline-none"
+        />
 
-          <div className="flex flex-wrap justify-center sm:justify-end gap-3">
-            <div>
-              <span className="text-sm text-gray-500">Add Product</span>
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="border rounded-xl px-4 py-2 focus:ring-2 focus:ring-pink-500"
+        >
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Loading Skeleton */}
+      {loading ? (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-64 bg-gray-200 rounded-2xl animate-pulse"
+            />
+          ))}
+        </div>
+      ) : (
+        <>
+          {/* Product Cards */}
+          <div className="grid sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {currentProducts.map((p) => (
+              <div
+                key={p._id}
+                className="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-4"
+              >
+                <img
+                  src={`${cleanBase}/${p.image}`}
+                  alt={p.name}
+                  className="w-full h-60 object-fit rounded-t-xl mb-4"
+                />
+
+                <h3 className="text-lg font-bold">{p.name}</h3>
+                <p className="text-gray-500 text-sm mb-2">
+                  {p.category}
+                </p>
+                <p className="text-pink-600 font-semibold mb-4">
+                  ₦{p.price}
+                </p>
+
+                <div className="flex justify-between">
+                  <button
+                    onClick={() => setSelectedProduct(p)}
+                    className="flex items-center gap-1 bg-slate-600 text-white px-3 py-1 rounded-lg text-sm"
+                  >
+                    <Pencil size={16} /> Edit
+                  </button>
+
+                  <button
+                    onClick={() => setDeleteId(p._id)}
+                    className="flex items-center gap-1 bg-rose-800 text-white px-3 py-1 rounded-lg text-sm"
+                  >
+                    <Trash2 size={16} /> Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="flex justify-center gap-2 mt-8">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`px-4 py-2 rounded-lg ${
+                  currentPage === i + 1
+                    ? "bg-pink-600 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Delete Modal */}
+      {deleteId && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 w-96 shadow-xl">
+            <h2 className="text-lg font-bold mb-4">
+              Confirm Delete
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this product?
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setDeleteId(null)}
+                className="px-4 py-2 bg-gray-300 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  handleDelete(deleteId);
+                  setDeleteId(null);
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg"
+              >
+                Delete
+              </button>
             </div>
-            
-            <button
-              onClick={handleAddProduct}
-              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
-            >
-              <Plus size={18} /> All Products
-            </button>
-
-            <button
-              onClick={handlePreorderProduct}
-              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
-            >
-              <Plus size={18} /> Pre-Order Products
-            </button>
-
-            <button
-              onClick={handleSalesOfferProduct}
-              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
-            >
-              <Plus size={18} /> Offer Sales Products
-            </button>
-
-            <button
-              onClick={handleOfferStats}
-              className="border border-slate-200 text-slate-900 font-bold font-nunito py-2 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-100 transition"
-            >
-              <BarChart size={18} /> Offer Stats
-            </button>
-
-            <button
-              onClick={handleLogout}
-              className="bg-rose-700 text-white px-4 py-2 rounded-lg hover:bg-rose-800 transition font-nunito font-semibold"
-            >
-              Logout
-            </button>
           </div>
         </div>
+      )}
 
-        {/* Product Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white rounded-lg shadow">
-            <thead className="bg-pink-600 text-white text-left">
-              <tr>
-                <th className="py-3 px-4 font-nunito font-bold">Image</th>
-                <th className="py-3 px-4 font-nunito">Name</th>
-                <th className="py-3 px-4 font-nunito">Category</th>
-                <th className="py-3 px-4 font-nunito">Price (₦)</th>
-                <th className="py-3 px-4 font-nunito">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((p) => (
-                <tr key={p._id} className="odd:bg-yellow-100 even:bg-white">
-                  <td className="py-2 px-4">
-                    <img
-                      src={`${cleanBase}/${p.image}`}
-                      alt={p.name}
-                      className="w-16 h-16 object-cover rounded-lg"
-                    />
-                  </td>
-                  <td className="py-2 px-4 font-semibold font-nunito">
-                    {p.name}
-                  </td>
-                  <td className="py-2 px-4 font-nunito">{p.category}</td>
-                  <td className="py-2 px-4 font-nunito">₦{p.price}</td>
-                  <td className="py-2 px-4 font-nunito">
-                    {editingProduct === p._id ? (
-                      <div className="flex flex-col space-y-2">
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Product Name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="border border-pink-100 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-pink-500"
-                        />
-                        <input
-                          type="text"
-                          name="category"
-                          placeholder="Category"
-                          value={formData.category}
-                          onChange={handleChange}
-                          className="border border-pink-100 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-pink-500"
-                        />
-                        <input
-                          type="number"
-                          name="price"
-                          placeholder="Price"
-                          value={formData.price}
-                          onChange={handleChange}
-                          className="border border-pink-100 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-pink-500"
-                        />
-                        <textarea
-                          name="description"
-                          value={formData.description}
-                          placeholder="Description"
-                          onChange={handleChange}
-                          className="border border-pink-100 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-pink-500"
-                        />
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleUpdate(p._id)}
-                            className="bg-pink-600 hover:bg-pink-700 font-nunito text-white font-medium py-2 px-8 rounded-sm flex items-center gap-2"
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={handleCancel}
-                            className="bg-slate-600 font-nunito hover:bg-slate-700 text-white font-medium py-2 px-8 rounded-sm flex items-center gap-2"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex gap-10">
-                        <button
-                          onClick={() => handleEdit(p)}
-                          className="flex items-center text-white gap-2 bg-slate-600 py-1 px-5 rounded-sm"
-                        >
-                          <Pencil size={18} /> Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(p._id)}
-                          className="flex items-center text-white gap-2 bg-red-600 py-1 px-5 rounded-sm"
-                        >
-                          <Trash2 size={18} />
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Slide-In Edit Panel */}
+      {selectedProduct && (
+        <div className="fixed inset-0 flex justify-end z-50">
+          <div
+            className="absolute inset-0 bg-black bg-opacity-40"
+            onClick={() => setSelectedProduct(null)}
+          />
+
+          <div className="relative bg-white w-96 h-full shadow-2xl p-6 overflow-y-auto">
+            <h2 className="text-xl font-bold mb-6">
+              Edit Product
+            </h2>
+
+            <input
+              type="text"
+              value={selectedProduct.name}
+              onChange={(e) =>
+                setSelectedProduct({
+                  ...selectedProduct,
+                  name: e.target.value,
+                })
+              }
+              className="border w-full mb-3 p-2 rounded-lg"
+              placeholder="Name"
+            />
+
+            <input
+              type="text"
+              value={selectedProduct.category}
+              onChange={(e) =>
+                setSelectedProduct({
+                  ...selectedProduct,
+                  category: e.target.value,
+                })
+              }
+              className="border w-full mb-3 p-2 rounded-lg"
+              placeholder="Category"
+            />
+
+            <input
+              type="number"
+              value={selectedProduct.price}
+              onChange={(e) =>
+                setSelectedProduct({
+                  ...selectedProduct,
+                  price: e.target.value,
+                })
+              }
+              className="border w-full mb-3 p-2 rounded-lg"
+              placeholder="Price"
+            />
+
+            <textarea
+              value={selectedProduct.description}
+              onChange={(e) =>
+                setSelectedProduct({
+                  ...selectedProduct,
+                  description: e.target.value,
+                })
+              }
+              className="border w-full mb-4 p-2 rounded-lg"
+              placeholder="Description"
+            />
+
+            <div className="flex gap-3">
+              <button
+                onClick={handleUpdate}
+                className="bg-pink-600 text-white px-4 py-2 rounded-lg"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setSelectedProduct(null)}
+                className="bg-gray-600 text-white px-4 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <Footer />
+      )}
     </div>
   );
 };

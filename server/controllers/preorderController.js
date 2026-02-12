@@ -61,3 +61,30 @@ export const deletePreorder = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// @desc    Get preorder stats
+// @route   GET /api/admin/preorders/stats
+// @access  Admin
+export const getPreorderStats = async (req, res) => {
+  try {
+    const now = new Date();
+
+    const total = await Preorder.countDocuments();
+
+    const active = await Preorder.countDocuments({
+      deadline: { $gte: now },
+    });
+
+    const expired = await Preorder.countDocuments({
+      deadline: { $lt: now },
+    });
+
+    res.json({
+      total,
+      active,
+      expired,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

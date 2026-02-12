@@ -21,17 +21,11 @@ export default function AdminOfferForm() {
   };
 
   return (
-    <section className="min-h-screen py-14 border-2 px-2 flex flex-col items-center justify-center">
-      <div className="w-full lg:w-3xl sm:w-xl mx-auto flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-pink-700 font-nunito">
+    <section className="py-5 px-2 flex flex-col items-center justify-center">
+      <div className="w-full lg:w-3xl sm:w-xl mx-auto flex justify-center items-center mb-8">
+        <h1 className="text-xl font-bold text-pink-700 font-playfair font-bold ">
           ADD OFFER SALES PRODUCT
         </h1>
-        <button
-          onClick={()=> toast.success("BuildUp in Progress")}
-          className="bg-pink-700 text-white px-4 py-2 rounded-lg font-nunito hover:bg-pink-600 transition"
-        >
-          MENU
-        </button>
       </div>
       <form
         onSubmit={submitHandler}
@@ -72,6 +66,7 @@ export default function AdminOfferForm() {
         />
         <input
           type="date"
+        
           className="shadow-sm shadow-gray-600 p-3 w-full outline-none rounded-lg focus:ring focus:ring-rose-300"
           required
           onChange={(e) => setForm({ ...form, deadline: e.target.value })}
@@ -82,7 +77,7 @@ export default function AdminOfferForm() {
           required
           onChange={(e) => setImage(e.target.files[0])}
         />
-        <button className="w-60 h-10 bg-gradient-to-r from-pink-700 to-pink-800 text-white font-nunito font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition disabled:opacity-50 sm:mt-13 sm:ml-20 lg:ml-2 lg:mt-5">
+        <button className="mt-5 w-60 h-10 bg-gradient-to-r from-pink-700 to-pink-800 text-white font-nunito font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition disabled:opacity-50 sm:mt-13 sm:ml-20 lg:ml-2 lg:mt-5">
           Upload Product
         </button>
       </form>

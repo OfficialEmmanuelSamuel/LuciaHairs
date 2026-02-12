@@ -20,7 +20,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop View */}
-        <div className="px-10 hidden md:flex space-x-10 font-bold font-nunito  text-gray-700 text-xs">
+        <div className="px-10 hidden md:flex space-x-10 font-bold font-nunito  text-gray-700 text-xs sm:space-x-7 lg:space-x-15">
           <Link to="/" className="nav-link">
             HOME
           </Link>
@@ -48,14 +48,14 @@ const Navbar = () => {
             className={`flex flex-col justify-center items-center w-10 h-10 space-y-1 ${menuOpen ? "shadow-none" : ""}`}
           >
             <span
-              className={`block h-1 w-7 rounded-lg bg-gray-600 transform transition duration-300 ease-in-out ${menuOpen ? "rotate-45 translate-y-2.5" : ""}`}
+              className={`block h-0.5 w-6 rounded-lg bg-rose-700 transform transition duration-300 ease-in-out ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
             />
 
             <span
-              className={`block h-1 w-7 rounded-lg bg-gray-600  transform transition duration-300 ease-in-out ${menuOpen ? "opacity-0" : ""}`}
+              className={`block h-0.5 w-6 rounded-lg bg-rose-700  transform transition duration-300 ease-in-out ${menuOpen ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-1 w-7 rounded-lg bg-gray-600  transform transition duration-300 ease-in-out ${menuOpen ? "-rotate-45 -translate-y-1.5" : ""}`}
+              className={`block h-0.5 w-6 rounded-lg bg-rose-700  transform transition duration-300 ease-in-out ${menuOpen ? "-rotate-45 -translate-y-1" : ""}`}
             />
           </div>
         </div>

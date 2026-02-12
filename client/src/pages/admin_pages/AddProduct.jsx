@@ -106,22 +106,16 @@ const AddProduct = () => {
   };
 
   return (
-    <section className="min-h-screen bg-white py-30 px-5 bg-red-900 border-2">
-      <div className="w-full mx-auto flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-pink-700 font-nunito">
-         ADD SHOPPING PRODUCT
+    <section className="min-h-screen bg-white py-5">
+      <div className="w-full flex justify-center items-center mb-8">
+        <h1 className="text-xl font-bold text-pink-700 font-playfair font-bold">
+         ADD  PRODUCT
         </h1>
-        <button
-          onClick={dashBoard}
-          className="bg-pink-700 text-white px-4 py-2 rounded-lg font-nunito hover:bg-pink-600 transition"
-        >
-          MENU
-        </button>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="w-full grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-3 p-3 rounded-2xl space-y-6 mx-auto"
+        className="w-full grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-3 rounded-2xl space-y-6 mx-auto"
       >
         {/* PRODUCT DETAILS FIELDSET */}
         <fieldset className="border border-gray-300 rounded-xl p-6">

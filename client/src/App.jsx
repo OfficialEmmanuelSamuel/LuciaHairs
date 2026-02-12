@@ -17,11 +17,13 @@ import { getToken } from "./utils/auth";
 import Shopping from "./pages/products_page/Shopping";
 import Footer from "./component/Footer";
 import AddProduct from "./pages/admin_pages/AddProduct";
-import AdminDashboardOffer from "../../client/src/pages/admin_pages/AdminDashboardOffer";  
+import AdminDashboardOffer from "./pages/admin_pages/AdminDashboardOffer";
+import AdminPreorderDashboard from "./pages/admin_pages/PreorderStats";
 import ScrollToTop from "./component/ScrollToTop";
 import AdminPreorderForm from "./pages/admin_pages/AdminPreorderForm";
 import AdminOfferForm from "./pages/admin_pages/AdminOfferForm";
 import LandingPage from "./pages/LandingPage";
+import AdminLayout from "./pages/admin_pages/AdminLayout";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
@@ -30,22 +32,50 @@ const App = () => {
     <BrowserRouter>
       <Navbar />
       <ScrollToTop />
+
       <Routes>
-        <Route path="/LandingPage" element={<LandingPage />} />
+
+        {/* ---------- CLIENT ROUTES ---------- */}
         <Route path="/" element={<Hero />} />
+        <Route path="/LandingPage" element={<LandingPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Review" element={<Review />} />
         <Route path="/Faqs" element={<Faqs />} />
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Shopping" element={<Shopping />} />
-        <Route path="/SalesOffer" element={<SalesOffer />}/>
-        <Route path="/admin/offer-stats" element={<AdminDashboardOffer />} />
-        <Route path="/PreOrder" element={<PreOrder />}/>
-        <Route path="/admin/register" element={<AdminRegister />} />
-        <Route path="/admin/products" element={<AddProduct />} />
-        <Route path="/admin/preorders" element={<AdminPreorderForm />} />
-        <Route path="/admin/offer-products" element={<AdminOfferForm />} />
+        <Route path="/SalesOffer" element={<SalesOffer />} />
+        <Route path="/PreOrder" element={<PreOrder />} />
+
+        {/* ---------- ADMIN ROUTES ---------- */}
+        <Route
+          path="/admin"
+          element={
+            isLoggedIn ? (
+              <AdminLayout onLogout={() => setIsLoggedIn(false)} />
+            ) : (
+              <Navigate to="/admin/login" />
+            )
+          }
+        >
+          {/* Dashboard Home */}
+          <Route
+            path="dashboard"
+            element={<AdminDashboard />}
+          />
+
+          {/* Admin Features */}
+          <Route path="products" element={<AddProduct />} />
+          <Route path="preorders" element={<AdminPreorderForm />} />
+          <Route path="offer-products" element={<AdminOfferForm />} />
+          <Route path="offer-stats" element={<AdminDashboardOffer />} />
+          <Route path="preorder-stats" element={<AdminPreorderDashboard />} />
+
+          {/* Default admin route */}
+          <Route index element={<Navigate to="dashboard" />} />
+        </Route>
+
+        {/* ---------- ADMIN LOGIN (OUTSIDE PROTECTED ROUTE) ---------- */}
         <Route
           path="/admin/login"
           element={
@@ -56,17 +86,11 @@ const App = () => {
             )
           }
         />
-        <Route
-          path="/admin/dashboard"
-          element={
-            isLoggedIn ? (
-              <AdminDashboard onLogout={() => setIsLoggedIn(false)} />
-            ) : (
-              <Navigate to="/admin/login" />
-            )
-          }
-        />
+
+        <Route path="/admin/register" element={<AdminRegister />} />
+
       </Routes>
+
       <Toaster position="top-right" reverseOrder={false} />
       <Footer />
     </BrowserRouter>

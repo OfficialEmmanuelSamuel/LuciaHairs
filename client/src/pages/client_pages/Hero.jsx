@@ -36,7 +36,7 @@ const HeroFeatures = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-rose-500 rounded-full opacity-20 animate-ping"></div>
 
       {/* Hero Main Section */}
-      <div className="relative z-10 flex flex-col-reverse mt-15 lg:flex-row items-center w-full max-w-7xl gap-10">
+      <div className="relative z-10 flex flex-col-reverse mt-10 lg:flex-row items-center w-full max-w-7xl gap-10">
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-start text-white">
           <motion.p

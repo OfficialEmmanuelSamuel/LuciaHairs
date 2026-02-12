@@ -51,17 +51,12 @@ export default function AdminPreorderForm() {
   };
 
   return (
-    <section className="min-h-screen py-14 border-2 px-2 flex flex-col items-center justify-center">
-      <div className="w-full lg:w-3xl sm:w-xl mx-auto flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-pink-700 font-nunito">
+    <section className=" py-5  px-2 flex flex-col items-center justify-center">
+      <div className="w-full lg:w-3xl sm:w-xl mx-auto flex items-center flex-col gap-5 justify-center items-center mb-8  lg:flex-row sm:flex-row">
+        <h1 className="text-xl font-bold text-pink-700 font-playfair font-bold ">
           ADD PREORDER PRODUCT
         </h1>
-        <button
-          onClick={() => toast.success("BuildUp in  Progress")}
-          className="bg-pink-700 text-white px-4 py-2 rounded-lg font-nunito hover:bg-pink-600 transition"
-        >
-          MENU
-        </button>
+        
       </div>
       <form
         onSubmit={handleSubmit}
